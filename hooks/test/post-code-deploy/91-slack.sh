@@ -23,9 +23,9 @@ repo_type="$6"
 # Post deployment notice to Slack
 
 if [ "$source_branch" != "$deployed_tag" ]; then
-  curl -X POST --data-urlencode "payload={\"text\": \"Auf *$site.$target_env* wurde der Branch *$source_branch* mit *$deployed_tag* deployed.\", \"icon_emoji\": \":acquiacloud:\"}" $SLACK_WEBHOOK_URL
+  curl -X POST --data-urlencode "payload={\"text\": \"Auf *$site.$target_env* wurde der Branch *$source_branch* mit *$deployed_tag* deployed.\"}" $SLACK_WEBHOOK_URL
 else
-  curl -X POST --data-urlencode "payload={\"text\": \"Auf *$site.$target_env* wurde der Tag *$deployed_tag* deployed.\", \"icon_emoji\": \":acquiacloud:\"}" $SLACK_WEBHOOK_URL
+  curl -X POST --data-urlencode "payload={\"text\": \"Auf *$site.$target_env* wurde der Tag *$deployed_tag* deployed.\"}" $SLACK_WEBHOOK_URL
 fi
 # never break things
 exit 0
