@@ -20,12 +20,16 @@ repo_type="$6"
 # Load the Slack webhook URL (which is not stored in this repo).
 . $HOME/slack_settings
 
-# Post deployment notice to Slack
+SITE_STRING="${$site^} (${$target_env^^})"
 
 if [ "$source_branch" != "$deployed_tag" ]; then
-  curl -X POST --data-urlencode "payload={\"text\": \"Auf *$site.$target_env* wurde der Branch *$source_branch* mit *$deployed_tag* deployed.\"}" $SLACK_WEBHOOK_URL
+  TEXT="Auf *${SITE_STRING}* wurde *$deployed_tag* (erzeugt aus *$source_branch*) deployed."
 else
-  curl -X POST --data-urlencode "payload={\"text\": \"Auf *$site.$target_env* wurde der Tag *$deployed_tag* deployed.\"}" $SLACK_WEBHOOK_URL
+  TEXT="Auf *${SITE_STRING}* wurde *$deployed_tag* deployed."
 fi
+
+# Post deployment notice to Slack
+curl -X POST --data-urlencode "payload={\"text\": \"${TEXT}\"}" $SLACK_WEBHOOK_URL
+
 # never break things
 exit 0
