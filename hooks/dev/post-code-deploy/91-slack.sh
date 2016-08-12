@@ -10,6 +10,9 @@
 # Usage: post-code-deploy site target-env source-branch deployed-tag repo-url
 #                         repo-type
 
+// try disabling immediate exit on error
+set +e
+
 site="$1"
 target_env="$2"
 source_branch="$3"
@@ -20,7 +23,7 @@ repo_type="$6"
 # Load the Slack webhook URL (which is not stored in this repo).
 . $HOME/slack_settings
 
-SITE_STRING="${$site^} (${$target_env^^})"
+SITE_STRING="${site^} (${target_env^^})"
 
 if [ "$source_branch" != "$deployed_tag" ]; then
   TEXT="Auf *${SITE_STRING}* wurde *$deployed_tag* (erzeugt aus *$source_branch*) deployed."
