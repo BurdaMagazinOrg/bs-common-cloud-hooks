@@ -1,16 +1,5 @@
-#!/bin/sh
-#
-# Cloud Hook: post-code-deploy
-#
-# The post-code-deploy hook is run whenever you use the Workflow page to
-# deploy new code to an environment, either via drag-drop or by selecting
-# an existing branch or tag from the Code drop-down list. See
-# ../README.md for details.
-#
-# Usage: post-code-deploy site target-env source-branch deployed-tag repo-url
-#                         repo-type
+#!/usr/bin/env bash
 
-// try disabling immediate exit on error
 set +e
 
 site="$1"
@@ -21,7 +10,7 @@ repo_url="$5"
 repo_type="$6"
 
 # Load the Slack webhook URL (which is not stored in this repo).
-. $HOME/slack_settings
+[ -f $HOME/slack_settings ] && . $HOME/slack_settings
 
 SITE_STRING="${site^} (${target_env^^})"
 
