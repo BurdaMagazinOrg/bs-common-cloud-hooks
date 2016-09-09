@@ -9,8 +9,11 @@ deployed_tag="$4"
 repo_url="$5"
 repo_type="$6"
 
-# Load the Slack webhook URL (which is not stored in this repo).
-[ -f $HOME/slack_settings ] && . $HOME/slack_settings
+if [ ! -f $HOME/.slack_settings ]; then
+  exit 0
+fi
+
+. $HOME/.slack_settings
 
 SITE_STRING="${site^} (${target_env^^})"
 
